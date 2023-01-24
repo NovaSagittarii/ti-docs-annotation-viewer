@@ -35,10 +35,8 @@
 .annotatedSegment:hover .annotation {
 	opacity: 1;
 	z-index: 999;
-}
-.annotatedSegment:hover .annotation code {
-	padding: 1em !important;
+	padding-top: 1em;
 }
 .annotatedSegment:hover .annotation:hover {
-	opacity: 0;
+	opacity: 0.2;
 }
