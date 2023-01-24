@@ -6,7 +6,23 @@ var code;
 	load(code);
 })();
 
+document.body.addEventListener('dragover', (event) => event.preventDefault());
+document.body.addEventListener('drop', async (event) => {
+	// console.log('File(s) dropped', event);
+	event.preventDefault();
+	for(const item of event.dataTransfer.items){
+      if (item.kind === 'file') {
+        const file = item.getAsFile();
+        const filename = file.name;
+        document.title = filename;
+      	load(await file.text());
+        break;
+      }
+    }
+});
+
 function load(sourceCode){
+	while(document.body.lastElementChild) document.body.removeChild(document.body.lastElementChild);
 	// turn into array with text, then comment, text pairs repeating.
 	const segments = sourceCode.replace(new RegExp("(?: *//[^\n]*\n){2,}", "g"), (x) => `\x00${x}\x00`)
 		.replace(/\r\n?/g, '\n')
